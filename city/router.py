@@ -48,6 +48,13 @@ async def read_specific_city(
 async def create_city(
         city: schemas.CityBase,
         session: AsyncSession = Depends(session_manager)):
+    """
+       note that for smooth work of the weather API :
+
+       - **use "USA"**: for the United States of America
+       - **use "UK"**: for the United Kingdom of Great Britain
+       - **for other countries**: use full country names
+       """
     check_city_name = await crud.get_city_by_name(session=session,
                                                   city_name=city.name)
     if check_city_name:
@@ -66,6 +73,13 @@ async def rewrite_city_info(
         city_name: str,
         city: schemas.CityBase,
         session: AsyncSession = Depends(session_manager)):
+    """
+       note that for smooth work of the weather API :
+
+       - **use "USA"**: for the United States of America
+       - **use "UK"**: for the United Kingdom of Great Britain
+       - **for other countries**: use full country names
+       """
     check_city_name = await crud.get_city_by_name(
         session=session,
         city_name=city_name
