@@ -1,4 +1,4 @@
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from temperature import models
 from temperature.temp_API import get_temperature
@@ -23,22 +23,21 @@ async def create_new_temp_record(
             f"current temperature value in {city_name} was added to the database")
 
 
-# section below is a draft only
-# async def get_all_records(session: AsyncSession,
-#                           skip: int = 0,
-#                           limit: int = 10):
-#     query = (select(models.DBTemperature).
-#              offset(skip).limit(limit))
-#     temp_data = await session.execute(query)
-#     return [record[0] for record in temp_data.all()]
-#
-#
-# async def get_city_records(session: AsyncSession,
-#                            city_name: str,
-#                            skip: int = 0,
-#                            limit: int = 10):
-#     query = (select(models.DBTemperature).
-#              where(models.DBTemperature.city_name == city_name).
-#              offset(skip).limit(limit))
-#     temp_data = await session.execute(query)
-#     return [record[0] for record in temp_data.all()]
+async def get_all_records(session: AsyncSession,
+                          skip: int = 0,
+                          limit: int = 10):
+    query = (select(models.DBTemperature).
+             offset(skip).limit(limit))
+    temp_data = await session.execute(query)
+    return [record[0] for record in temp_data.all()]
+
+
+async def get_city_records(session: AsyncSession,
+                           city_name: str,
+                           skip: int = 0,
+                           limit: int = 10):
+    query = (select(models.DBTemperature).
+             where(models.DBTemperature.city_name == city_name).
+             offset(skip).limit(limit))
+    temp_data = await session.execute(query)
+    return [record[0] for record in temp_data.all()]

@@ -11,6 +11,8 @@ async def get_temperature(input_country, input_city):
        - 'aiohttp.ClientSession()' creates a client session,
        which represents a connection pool for making HTTP requests asynchronously.
        - possible responses covered
+       - apparently www.timeanddate.com may not supply weather conditions for some
+       states. e.g.: Lviv
        """
     input_city = input_city.replace(" ", "-")
     url = f"https://www.timeanddate.com/weather/{input_country}/{input_city}"
@@ -23,6 +25,9 @@ async def get_temperature(input_country, input_city):
                 if temperature_element:
                     temperature_text = temperature_element.text
                     temperature_value = temperature_text.split('\xa0')[0]
+                    if temperature_element == "N/A":
+                        return f"city is not supported =("
+
                     return f"{temperature_value}°C"
                 else:
                     raise HTTPException(

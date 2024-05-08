@@ -11,6 +11,6 @@ class DBTemperature(Base):
     id = Column(Integer, primary_key=True, index=True)
     city_name = Column(String, ForeignKey("city.name"))
     date_time_utc = Column(DateTime)
-    temperature = Column(String(10), nullable=False)
+    temperature = Column(String(25), nullable=False)
 
     city = relationship(models.DBCity)
