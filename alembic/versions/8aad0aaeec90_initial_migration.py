@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: e737fcd7c54f
+Revision ID: 8aad0aaeec90
 Revises: 
-Create Date: 2024-05-07 17:55:06.638526
+Create Date: 2024-05-08 03:26:09.082900
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e737fcd7c54f'
+revision: str = '8aad0aaeec90'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,10 +31,10 @@ def upgrade() -> None:
     op.create_index(op.f('ix_city_id'), 'city', ['id'], unique=False)
     op.create_table('temperature',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('city_id', sa.Integer(), nullable=True),
-    sa.Column('date_time', sa.Date(), nullable=True),
-    sa.Column('temperature', sa.Float(), nullable=False),
-    sa.ForeignKeyConstraint(['city_id'], ['city.id'], ),
+    sa.Column('city_name', sa.String(), nullable=True),
+    sa.Column('date_time_utc', sa.DateTime(), nullable=True),
+    sa.Column('temperature', sa.String(length=10), nullable=False),
+    sa.ForeignKeyConstraint(['city_name'], ['city.name'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_temperature_id'), 'temperature', ['id'], unique=False)

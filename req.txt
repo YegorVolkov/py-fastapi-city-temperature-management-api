@@ -1,0 +1,9 @@
+fastapi
+sqlalchemy
+sqlalchemy-stubs
+alembic
+aiosqlite
+uvicorn
+requests
+beautifulsoup4
+aiohttp
